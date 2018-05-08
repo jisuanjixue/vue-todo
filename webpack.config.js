@@ -37,6 +37,11 @@ const config = {
             name: '[name]-smyh.[ext]' //设置图片的文件名。smyh表示所有文件名中都带有这个字符，[ext]指的是文件格式
           }
         }]
+      },
+      //加载 jsx 文件
+      {
+        test: /\.jsx$/,
+        loader: 'babel-loader'
       }
     ]
   },
@@ -53,10 +58,25 @@ const config = {
 }
 //针对开发环境的配置
 if (isDev) {
+  config.module.rules.push({
+    // stylus 预处理（这个只在开发环境中使用）
+    test: /\.styl/,
+    use: [
+      'style-loader',
+      'css-loader',
+      { //使用 'postcss-loader'所生成的 sourceMap，而不要使用 'stylus-loader' 所生成的 sourceMap
+        loader: 'postcss-loader',
+        options: {
+          sourceMap: true
+        }
+      },
+      'stylus-loader'
+    ]
+  })
   config.devtool = '#cheap-module-eval-source-map' //webpack官方推荐的。提高效率和准确性
   config.devServer = {
-    port: 8000,
-    host: '0.0.0.0', //注意，ip地址是字符串
+    port: 8080,
+    host: 'localhost', //注意，ip地址是字符串
     overlay: { // 如果有任何的错误，就让它显示到网页上
       errors: true
     },

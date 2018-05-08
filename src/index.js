@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './app.vue'
 import './assets/style/hello.css'
 import './assets/images/dess.png'
-// import './assets/style/test-stylus.styl'
+import './assets/style/global.styl'
 
 const root = document.createElement('div');
 document.body.appendChild(root)
