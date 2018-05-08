@@ -4,7 +4,7 @@
  */
 
 const path = require('path')//通过path获取根路径，更保险
-
+const createVueLoaderOptions = require('./vue-loader.config')  //引入vue-loader.config.js 文件
 const isDev = process.env.NODE_ENV === 'development' //我们在package.json中设置的环境变量，全部是存放在process.env中的
 const config = {
   target: 'web', //表示webpack的编译目标是 web 平台
@@ -21,7 +21,8 @@ const config = {
       {
         // test的意思是：检测文件类型
         test: /\.vue$/,  //通过`vue-loader`工具，让 webpack 支持 .vue 文件的编译
-        loader: 'vue-loader'
+        loader: 'vue-loader',
+        options: createVueLoaderOptions(isDev)
       },
       //加载 jsx 文件
       {

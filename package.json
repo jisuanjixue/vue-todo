@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",
+    "build:client": "cross-env NODE_ENV=production webpack --config build/webpack.config.client.js",
+    "clean": "rimraf dist",
+    "build": "npm run clean && npm run build:client",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -14,7 +16,6 @@
     "vue": "^2.5.16"
   },
   "devDependencies": {
-    "webpack-merge": "^4.1.2",
     "autoprefixer": "^8.4.1",
     "babel-core": "^6.26.3",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
@@ -28,6 +29,7 @@
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
     "postcss-loader": "^2.1.5",
+    "rimraf": "^2.6.2",
     "style-loader": "^0.21.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
@@ -35,6 +37,7 @@
     "vue-loader": "^13.7.1",
     "vue-template-compiler": "^2.5.16",
     "webpack": "^3.11.0",
-    "webpack-dev-server": "^2.9.7"
+    "webpack-dev-server": "^2.9.7",
+    "webpack-merge": "^4.1.2"
   }
 }
