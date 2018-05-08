@@ -10,6 +10,7 @@
 
 <script>
   export default {
+    // props,本身就是一个对象,可以是一个对象,一个数组,一般都把type,required写入
     props: {
       todo: {
         type: Object,
@@ -17,7 +18,9 @@
       }
     },
     methods: {
+      // 通过子组件的触发点击删除按钮,告诉delItem,让他去删除todo
       deleteTodoItem () {
+        // 用到vue的$emit, 用好多条todo,delItem不知道要删除那一条,那就this.todo.id,指定一条,todo的id是由上面的props,由父组件传递过来.
         this.$emit('delItem', this.todo.id)
       }
     },

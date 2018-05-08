@@ -25,7 +25,7 @@
 <script>
 export default {
   props: {
-    // filter属性是上层组件传递进来的
+    // filter属性是父组件传递进来的
     filter: {
       type: String,
       required: true
@@ -49,8 +49,8 @@ export default {
   methods: {
     clearAllCompleted() {
       this.$emit('clearAllCompleted')
-
     },
+    // 把state传给toggle监听者,
     toggleFilter(state) {
       this.$emit('toggle',state)  //传递出去的值，就是下一个 filter 的状态
     }

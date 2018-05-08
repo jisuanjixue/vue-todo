@@ -9,7 +9,8 @@
         v-model.trim="content"
         @keyup.enter="addTodoItem"
       >
-      <Item :todo="todo" v-for="todo in filteredTodos" :key="todo.id" @delItem="delTodoItem"></Item>
+      <Item :todo="todo" v-for="(todo, index) in filteredTodos" :key="todo.id" @delItem="delTodoItem(todo.id, index)"></Item>
+      <!-- filter是用来动态点击切换下标(all, active, completed), @toggle监听tab组件的点击切换, 切换后数据要变换就要todoDatas, 监听清除完成的 -->
       <Tabs :filter="filter" :todoDatas="todoDatas" @toggle="toggleFilter" @clearAllCompleted="clearAllCompleted"></Tabs>
     </section>
   </div>
@@ -33,7 +34,7 @@ let id = 0
     },
     computed: {
       // 已经被过滤过的todos
-      filteredTodos () {
+      filteredTodos() {
          //情况一：显示全部的items
          if (this.filter === 'all') {
            return this.todoDatas
@@ -44,19 +45,40 @@ let id = 0
       }
     },
     methods: {
-      addTodoItem () {
+      addTodoItem() {
+        // 首先,添加一条待办事项,从没有到有,需要往这个数组里添加一些信息,id content 是否完成,用到数组的一个方法unshift,从数组的最前面插入一条(todo对象)
         this.todoDatas.unshift({
           id: id++,
-          content: this.content,
+          content: this.content, // 用v-model绑定
           completed: false
         })
         this.content = '' //item添加完成后，清空输入框
       },
-      delTodoItem (id) {
-        this.todoDatas.splice(this.todoDatas.findIndex(todo => todo.id === id),1)
+      /*
+      // template里的input就不用v-model
+      addTodoItem(e) {
+        //e 指的是 event 对象
+        this.todoDatas.unshift({
+          //unshift()：在在数组的最前面插入一个item
+          id: id++, //每个item都有一个id。最开始的时候，id为0，新来的item，让id加一
+          content: e.target.value.trim(), //获取输入框中的内容
+          completed: false //新的item，默认都是未完成的状态
+        });
+        e.target.value = ""; //item添加完成后，清空输入框
       },
+      */
+      // 子组件告诉我,删除某条todo,我是怎么监听到的,通过上面template里子组件的@delItem,等同于v-on:delItem,然后动手删除,在事件methods里执行,删除哪一条用id来识别,在函数里传参.
+      delTodoItem(todoId, index) {
+        // 用splice(index, 1)方法删除,
+        this.todoDatas.splice(index, 1)
+      },
+      // delTodoItem(id) {
+      //   下面的index,是用es6的findIndex找到,它是用值来找这个值的索引
+      //   this.todoDatas.splice(this.todoDatas.findIndex(todo => todo.id === id),1)
+      // },
+      // 监听到了state就操作filter状态, state作为监听和触发函数的参数,在父子组件中使用
       toggleFilter(state) {
-        this.filter = state;
+        this.filter = state
       },
       clearAllCompleted() {
         this.todoDatas = this.todoDatas.filter(todo => !todo.completed); //给todoDatas赋一个过滤之后的新的值
