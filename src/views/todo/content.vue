@@ -38,10 +38,9 @@ let id = 0
          //情况一：显示全部的items
          if (this.filter === 'all') {
            return this.todoDatas
-         } else {
-           const completed = this.filter === "completed"
-           return this.todoDatas.filter(todo => completed === todo.completed)
          }
+        const completed = this.filter === "completed"
+        return this.todoDatas.filter(todo => completed === todo.completed)
       }
     },
     methods: {

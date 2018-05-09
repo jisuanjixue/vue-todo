@@ -1,6 +1,6 @@
 <template>
   <div :class="['list-item', todo.completed ? 'completed' : '']">
-    <input type="checkout" class="toggle" v-model="todo.completed">
+    <input type="checkbox" class="toggle" v-model="todo.completed">
     <!-- item 的文字部分 -->
     <label>{{todo.content}}</label>
     <!-- item 右侧的 叉叉 -->
@@ -39,8 +39,6 @@
       content: '×';
     }
   }
-
-  // item 的文字部分的样式
   label {
     white-space: pre-line;
     word-break: break-all;
@@ -55,24 +53,6 @@
       color: #d9d9d9;
       text-decoration: line-through;
     }
-  }
-  .destory {
-    position: absolute;
-    top: 0;
-    right: 10px;
-    bottom: 0;
-    width: 40px;
-    height: 40px;
-    margin: auto 0;
-    font-size: 30px;
-    color: #cc9a9a;
-    margin-bottom: 11px;
-    transition: color 0.2s ease-out;
-    background-color: transparent;
-    appearance: none;
-    border-width: 0;
-    cursor: pointer;
-    outline: none;
   }
   .toggle {
     text-align: center;
@@ -94,5 +74,23 @@
       content: url('../../assets/images/done.svg'); // item左侧图标的对勾
     }
   }
+}
+.destory {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  bottom: 0;
+  width: 40px;
+  height: 40px;
+  margin: auto 0;
+  font-size: 30px;
+  color: #cc9a9a;
+  margin-bottom: 11px;
+  transition: color 0.2s ease-out;
+  background-color: transparent;
+  appearance: none;
+  border-width: 0;
+  cursor: pointer;
+  outline: none;
 }
 </style>
